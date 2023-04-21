@@ -73,20 +73,16 @@
 
 The problem can be described from a simple scenario:
 \begin{itemize}
-    \item You have a set of items
-    \item You want to perform the following operation starting with the full set of items:
-    \begin{enumerate}
-        \item Take one item from the set. Any item can be taken away so this will result in many possible outcomes for new sets.
-        \item For each new set continue to take away one item.
-        \item Do this until no items are left.
-    \end{enumerate}
+    \item You start with a full set of items
+    \item At each step, you remove one item from your current set
+    \item You may continue until no items are left
+    \item Once an item is removed, it cannot be added back unless you restart back to the full set
 \end{itemize}
-
-Given that scenario, the question is threefold:
+Consider all unique steps that are possible, where a step is defined as the combination of your current set and the item you choose to remove in that step. The main question of interest is how many times must you restart back to the full set in order to visit every unique step? We tackle this by first asking these questions:
 \begin{enumerate}
-    \item How many ways can the final empty set be reached?
-    \item What is the time complexity of searching each path to reach the final empty set compared to the number of nodes?
-    \item What is the space complexity of storing every path compared to the number of nodes?
+	\item How many unique sets exist?
+    \item How many unique steps exist?
+    \item How many unique steps exist with respect to the number of unique sets?
 \end{enumerate}
 
 \section{Symbol Soup}
@@ -347,6 +343,30 @@ Given the inequalities for the constants, this proves that the number of edges g
 \label{sec:DeeperIntuitions}
 
 TODO
+
+\section{Visiting Edges}
+Now that we have ways of expressing the number of nodes and edges in this DAG
+we are traversing, the question remains how to visit every edge in this graph
+where backtracking is not allowed. More specifically, what is the minimum
+number of times you must restart at the start node (the top element of the
+lattice if you will) and traverse along paths in the graph until you have
+visited every edge? This is equivalent to the well known minimum path cover
+problem.  TODO Can we prove that the minimum path cover is equal to the number
+of edges coming out of the largest column? Idk, it certainly feels correct.
+Maybe use max cut/min flow theorem? Also, is Kuhn's algorithm ultimately
+equivalent to my idea of finding augmenting paths by searching for the closest
+parent to the start node with an unvisited edge and extending as far as
+possible?  Assume the optimal number of paths in the minimum path cover is
+equal to the number of edges coming out of the largest column. How many edges
+is this? First lets find how many nodes are in the largest column.
+$$s = |S|$$
+$$n_{\frac{s}{2}} = \frac{s!}{(s - \frac{s}{2})!(\frac{s}{2})!} = \frac{s!}{\frac{s}{2}!^2}$$
+Use stirling's approximation $n! = O(n^n\sqrt{n})$
+$$ = O(\frac{s^s\sqrt{s}}{((\frac{s}{2})^\frac{s}{2}\sqrt{\frac{s}{2}})^2})$$
+$$ = O(\frac{s^s\sqrt{s}}{(\frac{s}{2})^s\frac{s}{2}}) = O(2^s\frac{\sqrt{s}}{s}) = O(\frac{2^s}{\sqrt{s}})$$
+We also know $e_{\frac{s}{2}} = n_{\frac{s}{2}}\frac{s}{2}$
+$$e_{\frac{s}{2}} = O(2^s\sqrt{s})$$
+This makes sense because the number of nodes in each column represent binomial coefficients which approximate a normal distribution as $s$ approaches infinity. The integral of the normal distribution could be approximated asymptotically with a rectangle with the same height as the mean and width equal to the inflection points. The inflection points of the normal distribution occur at one standard deviation away from the mean. The variance of the normal distribution that these binomial coefficient approach is $\frac{s}{4}$, so linear with respect to s. Therefore the standard deviation, and furthermore the width of our rectangle approximation should grow with $\sqrt{s}$. This means that the height of this rectangle multipled by $\sqrt{s}$ should be equal to $2^s$.
 
 \section{Examples}
 
