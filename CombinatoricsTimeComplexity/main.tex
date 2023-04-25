@@ -294,7 +294,7 @@ Given that equation \ref{eq:edgesSymmetry} is true, the following sequence of si
         \sum_{i=0}^{\frac{|S|}{2}}\frac{|S|!}{(|S|-i)!i!}\left(i\right)
         \\
         &=
-        \sum_{i=0}^{\frac{|S|}{2}}\frac{|S|!}{(|S|-i)!i!}\left(|S|\right)
+        \sum_{i=0}^{\frac{|S|}{2}}\frac{|S|!}{(|S|-i)!i!}|S|
         \\
         &=
         \frac{|S|}{2}\sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!}
@@ -335,14 +335,93 @@ The constants $c_1$ and $c_2$ can now easily be solved for.
         \\
         c_2 &\ge \frac{1}{2\log(2)}
     \end{split}
+    \label{eq:BoundardInequalities}
 \end{equation}
 
 Given the inequalities for the constants, this proves that the number of edges grows with the number of nodes times the log of the number of nodes, or $e_t\in \Theta(n_t\log(n_t))$.
 
-\section{Deeper Intuitions}
-\label{sec:DeeperIntuitions}
+\section{Big $\Theta$: Attempting A Geometrical Approach}
+\label{sec:TigherBoundGeometricalApproach}
 
-TODO
+If equation \ref{eq:TotalNumNodesPowerSet} is substituted in the inequalities in equation \ref{eq:nlognInequality}, they can be simplified to equation \ref{eq:nlognInequalityPartiallySimplified}.
+
+\begin{equation}
+    \begin{split}
+        \forall n_t\ge n_o \;\; &
+        c_1|S|\sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!}
+        \log \left( 2 \right)
+        \le
+        \sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!}(|S|-i)
+        \\
+        \forall n_t\ge n_o \;\; &
+        \sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!}(|S|-i)
+        \le
+        c_2|S|\sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!}
+        \log \left( 2 \right)
+    \end{split}
+    \label{eq:nlognInequalityPartiallySimplified}
+\end{equation}
+
+If analysis similar to what was done in section \ref{sec:UpperBound} is applied to this set of inequalities some suprising results can be had. Similar to section \ref{sec:UpperBound}, if equation \ref{eq:} is true then so must be \ref{eq:nlognInequalityPartiallySimplified}.
+
+\begin{equation}
+	\begin{split}
+		\forall i \;\; & c_1|S|\log(2)\le |S|-i \\
+		\forall i \;\; & |S|-i\le c_2|S|\log(2)
+	\end{split}
+	\label{eq:looseInequalities}
+\end{equation}
+
+The second inequality in equation \ref{eq:looseInequalities} is simple enough. $|S|-i$ will be its largest when $i=0$. If the RHS of the second inequality is larger than the LHS's largest value then the inequality is true. Setting $i=0$ and simplifying results in the below inequality.
+
+\begin{equation}
+	c_2\ge \frac{1}{\log(2)}
+	\label{eq:looseUpperInequality}
+\end{equation}
+
+This may seem shocking, equation \ref{eq:looseUpperInequality} does not exactly match the result of equation \ref{eq:BoundardInequalities}. This is easily explained by simplifying the problem to only consider the largest value of $|S|-i$, instead of the total summation of the $|S|-i$ term.
+
+Following the same logic for the first inequality in equation \ref{eq:looseInequalities} leads to some problems. This time, $|S|-i$ will be its smallest when $i=|S|$. If the LHS of the first inequality is smaller than the RHS's smallest value then the inequality is true. Setting $i=0$ and simplifying results in the below inequality. Setting $i=|S|$ and simplifying results in $c_1\le0$, which cannot be the case. This likely seems worse than the previous result, as this time the new way of thinking about the problem resulted in an opposing conclusion. However, this is again easily explained by simplifying the problem to only consider the smallest value of $|S|-i$, instead of the total summation of the $|S|-i$ term.
+
+These results show that the result from section \ref{sec:TightBound} truly is a tight bound, as it is not something that can be easily proven for all $i$ values and instead requires careful consideration of the total summation values.
+
+
+To consider the total summation values, a more geometric approach is required. Looking at the inequalities shown in equation \ref{eq:looseInequalities}, they can be reinterperted as representing areas. The $|S|-i$ term represent the area of a triangle with base and height of $|S|$, and the $c_X|S|\log(2)$ term repsents the area of a square with sides of length $|S|$ that are scaled by some constant value, $c_X$. With these gemoterical interpretations, the inequalitites in equation \ref{eq:looseInequalities} can be rewritten as shown in equation \ref{eq:looseInequalitiesArea}.
+
+\begin{equation}
+	\begin{split}
+		c_1|S|^2\log(2)\le \frac{|S|^2}{2} \\
+		\frac{|S|^2}{2}\le c_2|S|\log(2)
+	\end{split}
+	\label{eq:looseInequalitiesArea}
+\end{equation}
+
+After simplification the results for the constants match those shown in equation \ref{eq:BoundardInequalities}. However, there is one small nuance: with this new approach the inequalities were rewritten without the $\forall i$ term because all $i$ values are being the considered through means of the total area. However, removing the $\forall i$ term invalidated the claim that if the inequalities in equation \ref{eq:looseInequalities} were true then the inequalities in equation \ref{eq:nlognInequalityPartiallySimplified} were true because all the values in the inequalities from equation \ref{eq:looseInequalities} were multiplied by $n_c(i)$ within the summations of equation \ref{eq:nlognInequalityPartiallySimplified}. Yet, the result is the exact same as the result from section \ref{sec:TightBound}. This has the following baffling intuition: the summation of the product of the parts is equal to the product of the summations. Or, in more mathematical terms, it implies the following falsehoods to be true:
+
+\begin{equation}
+	\begin{split}
+		\sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!}\left(|S| -i\right)
+		&\ne
+		\left( \sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!} \right)\sum_{i=0}^{|S|}\left(|S| -i\right)
+		\\
+		&=
+		\left( \sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!} \right)\frac{|S|^2}{2}
+		\\
+		\sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!}
+        \log \left( \sum_{j=0}^{|S|-1}\frac{|S|!}{(|S|-j)!j!} \right)
+        &\ne
+        \left( \sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!} \right)
+        \sum_{i=0}^{|S|}
+        \log \left( \sum_{j=0}^{|S|}\frac{|S|!}{(|S|-j)!j!} \right)
+        \\
+        &=
+        \left( \sum_{i=0}^{|S|}\frac{|S|!}{(|S|-i)!i!} \right)
+        |S|^2\log(2)
+	\end{split}
+\end{equation}
+
+There must exist a reason the results match despite the above mathematical falsies. The reason boils down to the symmetrical nature of the problem.
+
 
 \section{Visiting Edges}
 Now that we have ways of expressing the number of nodes and edges in this DAG
