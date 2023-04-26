@@ -118,7 +118,14 @@ This section is here for convenience to list all of the symbols that will be use
 \section{Graph Representation and Pascals Triangle}
 \label{sec:GraphAndPascalsTriangle}
 
-Before moving forward it is helpful to see the problem in the form of a graph. Figure \ref{fig:} shows an example graph with an initial set, $S$, with six items, $|S|=6$.
+Before moving forward it is helpful to see the problem in the form of a graph. Figure \ref{fig:Graph} shows an example graph with an initial set, $S$, with six items, $|S|=4$.
+
+\begin{figure}[h]
+    \center
+    \includegraphics[scale=1]{img/Graph.png}
+    \caption{The graph representation of the problem at hand. Each node represents a possible set of items.}
+    \label{fig:Graph}
+\end{figure}
 
 Several things should be immediately apparent:
 \begin{enumerate}
@@ -141,7 +148,7 @@ Following that, the total number of nodes in the graph can be found using equati
     \label{eq:TotalNumNodes}
 \end{equation}
 
-Finding the total number of edges seems to be more tricky, but the solution is to count the number of edges coming out of each node in each column. Looking at the example from figure \ref{fig:}, a clear linear pattern should be apparent. This pattern can be represented using equation \ref{eq:EdgesPerNodePerColumn}.
+Finding the total number of edges seems to be more tricky, but the solution is to count the number of edges coming out of each node in each column. Looking at the example from figure \ref{fig:Graph}, a clear linear pattern should be apparent. This pattern can be represented using equation \ref{eq:EdgesPerNodePerColumn}.
 
 \begin{equation}
     e_{n,c}(i)=|S|-i\\
@@ -253,7 +260,7 @@ Going all the way back to the original problem definition, another way to think 
     \label{eq:TotalNumNodesPowerSet}
 \end{equation}
 
-The equation for the total number of edges requires more thought. For the total number of edges it helps to write out the terms from an example with a small value for $|S|$. It can be observed that the terms repeat themselves which allows for a simplification where half of the terms can just be multiplied by two. This result makes intuitive sense because the graph in figure \ref{fig:} is symmetrical.
+The equation for the total number of edges requires more thought. For the total number of edges it helps to write out the terms from an example with a small value for $|S|$. It can be observed that the terms repeat themselves which allows for a simplification where half of the terms can just be multiplied by two. This result makes intuitive sense because the graph in figure \ref{fig:Graph} is symmetrical.
 
 \begin{equation*}
     \begin{split}
@@ -391,7 +398,7 @@ To consider the total summation values, a more geometric approach is required. L
 \begin{equation}
 	\begin{split}
 		c_1|S|^2\log(2)\le \frac{|S|^2}{2} \\
-		\frac{|S|^2}{2}\le c_2|S|\log(2)
+		\frac{|S|^2}{2}\le c_2|S|^2\log(2)
 	\end{split}
 	\label{eq:looseInequalitiesArea}
 \end{equation}
@@ -420,7 +427,7 @@ After simplification the results for the constants match those shown in equation
 	\end{split}
 \end{equation}
 
-There must exist a reason the results match despite the above mathematical falsies. The reason boils down to the symmetrical nature of the problem.
+There must exist a reason the results match despite the above mathematical falsies. The reason simply boils down to the incorrect removal of the $\forall i$ term in the inequalities listed in equation \ref{eq:looseInequalities}. By removing that term the summations were effectively separated and an extra $|S|$ term was added. The only reason the result of the geometrical approach outlined in this section matched analytical approach outlined in section \ref{sec:TightBound} is because the $|S|$ term was added to both sides of the inequalities, allowing them to cancel out. With that conclusion, this section showed an attempted, but ultimately incorrect, geometrical approach to apply a tight bound.
 
 
 \section{Visiting Edges}
