@@ -342,10 +342,17 @@ The constants $c_1$ and $c_2$ can now easily be solved for.
         \\
         c_2 &\ge \frac{1}{2\log(2)}
     \end{split}
-    \label{eq:BoundardInequalities}
+    \label{eq:BoundaryInequalities}
 \end{equation}
 
-Given the inequalities for the constants, this proves that the number of edges grows with the number of nodes times the log of the number of nodes, or $e_t\in \Theta(n_t\log(n_t))$.
+Given the inequalities for the constants, this proves that the number of edges grows with the number of nodes times the log of the number of nodes, or $e_t\in \Theta(n_t\log(n_t))$. The graph in figure \ref{fig:DesmosProof} demonstrates the proof outlined in this section.
+
+\begin{figure}[h]
+    \center
+    \includegraphics[scale=0.4]{img/DesmosProof.png}
+    \caption{The graph demonstrates the proof outlined in this section. Note how three different values of $c$ are demonstrated.}
+    \label{fig:DesmosProof}
+\end{figure}
 
 \section{Big $\Theta$: Attempting A Geometrical Approach}
 \label{sec:TigherBoundGeometricalApproach}
@@ -369,7 +376,7 @@ If equation \ref{eq:TotalNumNodesPowerSet} is substituted in the inequalities in
     \label{eq:nlognInequalityPartiallySimplified}
 \end{equation}
 
-If analysis similar to what was done in section \ref{sec:UpperBound} is applied to this set of inequalities some suprising results can be had. Similar to section \ref{sec:UpperBound}, if equation \ref{eq:} is true then so must be \ref{eq:nlognInequalityPartiallySimplified}.
+If analysis similar to what was done in section \ref{sec:UpperBound} is applied to this set of inequalities some surprising results can be had. Similar to section \ref{sec:UpperBound}, if equation \ref{eq:looseInequalities} is true then so must be equation \ref{eq:nlognInequalityPartiallySimplified}.
 
 \begin{equation}
 	\begin{split}
@@ -386,14 +393,11 @@ The second inequality in equation \ref{eq:looseInequalities} is simple enough. $
 	\label{eq:looseUpperInequality}
 \end{equation}
 
-This may seem shocking, equation \ref{eq:looseUpperInequality} does not exactly match the result of equation \ref{eq:BoundardInequalities}. This is easily explained by simplifying the problem to only consider the largest value of $|S|-i$, instead of the total summation of the $|S|-i$ term.
+This may seem shocking, equation \ref{eq:looseUpperInequality} does not exactly match the result of equation \ref{eq:BoundaryInequalities}. This is easily explained by simplifying the problem to only consider the largest value of $|S|-i$, instead of the total summation of the $|S|-i$ term.
 
-Following the same logic for the first inequality in equation \ref{eq:looseInequalities} leads to some problems. This time, $|S|-i$ will be its smallest when $i=|S|$. If the LHS of the first inequality is smaller than the RHS's smallest value then the inequality is true. Setting $i=0$ and simplifying results in the below inequality. Setting $i=|S|$ and simplifying results in $c_1\le0$, which cannot be the case. This likely seems worse than the previous result, as this time the new way of thinking about the problem resulted in an opposing conclusion. However, this is again easily explained by simplifying the problem to only consider the smallest value of $|S|-i$, instead of the total summation of the $|S|-i$ term.
+Following the same logic for the first inequality in equation \ref{eq:looseInequalities} leads to some problems. This time, $|S|-i$ will be its smallest when $i=|S|$. If the LHS of the first inequality is smaller than the RHS's smallest value then the inequality is true. Setting $i=|S|$ and simplifying results in $c_1\le0$, which cannot be the case. This likely seems worse than the previous result, as this time the new way of thinking about the problem resulted in an opposing conclusion. However, this is again easily explained by simplifying the problem to only consider the smallest value of $|S|-i$, instead of the total summation of the $|S|-i$ term. \footnote{On a more positive note, these results show that the result from section \ref{sec:TightBound} truly is a tight bound, as it is not something that can be easily proven for all $i$ values and instead requires careful consideration of the total summation values.}
 
-These results show that the result from section \ref{sec:TightBound} truly is a tight bound, as it is not something that can be easily proven for all $i$ values and instead requires careful consideration of the total summation values.
-
-
-To consider the total summation values, a more geometric approach is required. Looking at the inequalities shown in equation \ref{eq:looseInequalities}, they can be reinterperted as representing areas. The $|S|-i$ term represent the area of a triangle with base and height of $|S|$, and the $c_X|S|\log(2)$ term repsents the area of a square with sides of length $|S|$ that are scaled by some constant value, $c_X$. With these gemoterical interpretations, the inequalitites in equation \ref{eq:looseInequalities} can be rewritten as shown in equation \ref{eq:looseInequalitiesArea}.
+To consider the total summation value, a more geometric approach is required. Looking at the inequalities shown in equation \ref{eq:looseInequalities}, they can be reinterpreted as representing areas. The $|S|-i$ term represent the area of a triangle with base and height of $|S|$, and the $c_X|S|\log(2)$ term resents the area of a square with sides of length $|S|$ that are scaled by some constant value, $c_X$. With these geometrical interpretations, the inequalities in equation \ref{eq:looseInequalities} can be rewritten as shown in equation \ref{eq:looseInequalitiesArea}.
 
 \begin{equation}
 	\begin{split}
@@ -403,7 +407,7 @@ To consider the total summation values, a more geometric approach is required. L
 	\label{eq:looseInequalitiesArea}
 \end{equation}
 
-After simplification the results for the constants match those shown in equation \ref{eq:BoundardInequalities}. However, there is one small nuance: with this new approach the inequalities were rewritten without the $\forall i$ term because all $i$ values are being the considered through means of the total area. However, removing the $\forall i$ term invalidated the claim that if the inequalities in equation \ref{eq:looseInequalities} were true then the inequalities in equation \ref{eq:nlognInequalityPartiallySimplified} were true because all the values in the inequalities from equation \ref{eq:looseInequalities} were multiplied by $n_c(i)$ within the summations of equation \ref{eq:nlognInequalityPartiallySimplified}. Yet, the result is the exact same as the result from section \ref{sec:TightBound}. This has the following baffling intuition: the summation of the product of the parts is equal to the product of the summations. Or, in more mathematical terms, it implies the following falsehoods to be true:
+After simplification the results for the constants match those shown in equation \ref{eq:BoundaryInequalities}. However, there is one small nuance: with this new approach the inequalities were rewritten without the $\forall i$ term because all $i$ values are being the considered through means of the total area. However, removing the $\forall i$ term invalidated the claim that if the inequalities in equation \ref{eq:looseInequalities} were true then the inequalities in equation \ref{eq:nlognInequalityPartiallySimplified} were true because all the values in the inequalities from equation \ref{eq:looseInequalities} were multiplied by $n_c(i)$ within the summations of equation \ref{eq:nlognInequalityPartiallySimplified}. Yet, the result is the exact same as the result from section \ref{sec:TightBound}. This has the following baffling intuition: the summation of the product of the parts is equal to the product of the summations. Or, in more mathematical terms, it implies the following falsehoods to be true:
 
 \begin{equation}
 	\begin{split}
@@ -427,8 +431,293 @@ After simplification the results for the constants match those shown in equation
 	\end{split}
 \end{equation}
 
-There must exist a reason the results match despite the above mathematical falsies. The reason simply boils down to the incorrect removal of the $\forall i$ term in the inequalities listed in equation \ref{eq:looseInequalities}. By removing that term the summations were effectively separated and an extra $|S|$ term was added. The only reason the result of the geometrical approach outlined in this section matched analytical approach outlined in section \ref{sec:TightBound} is because the $|S|$ term was added to both sides of the inequalities, allowing them to cancel out. With that conclusion, this section showed an attempted, but ultimately incorrect, geometrical approach to apply a tight bound.
+There must exist a reason the results match despite the above mathematical falsies. The reason simply boils down to the incorrect removal of the $\forall i$ qualifier in the inequalities listed in equation \ref{eq:looseInequalities}. By removing that qualifier the summations were effectively separated and an extra $|S|$ term was added. The only reason the result of the geometrical approach outlined in this section matched analytical approach outlined in section \ref{sec:TightBound} is because the $|S|$ term was added to both sides of the inequalities, allowing them to cancel out. With that conclusion, this section showed an attempted, but ultimately incorrect, geometrical approach to apply a tight bound.
 
+
+\section{Asymptotic Behavior and L'Hopital's Rule}
+\label{sec:LHopitalsRule}
+
+Another alternative approach that leads to some interesting conclusions is outlined in this section. Imagine trying to prove the following inequality true. It should be clear this inequality is equivalent to the second inequality listed in equation \ref{eq:looseInequalities}.
+
+\begin{equation}
+	\begin{split}
+		\forall i \;\; |S|-i\le c_2 \log \left( \sum_{j=0}^{|S|}\frac{|S|!}{(|S|-j)!j!} \right)
+	\end{split}
+	\label{eq:singleInequality}
+\end{equation}
+
+To simplify the inequality a different approach will be used. Instead of considering the entire summation, only the largest value of the summation will be considered. \footnote{This is also why one one inequality is being considered. Proving that $|S|-i$ is greater than the largest value of the summation does nothing to prove it is greater than the entire summation.} If the inequality can be proven for this smaller value then it should also be true for the entire summation. Given the combinatoric nature of the summation, it should be obvious that the largest value will occur when $j=\frac{|S|}{2}$. This makes the new inequality take the form shown in equation \ref{eq:singleInequalitySingleSumValue}.
+
+\begin{equation}
+	\begin{split}
+		\forall i \;\; |S|-i\le c_2 \log \left( \frac{|S|!}{(|S|-\frac{|S|}{2})!\frac{|S|}{2}!} \right)
+	\end{split}
+	\label{eq:singleInequalitySingleSumValue}
+\end{equation}
+
+
+%To find the largest value, the range of $j$ must be considered, which is $0\to |S|$. Replacing $j$ with equation \ref{eq:} will let the summation values be treated as continuous and classical calculus can be used to find the maximum value.
+
+%\begin{equation}
+%	j=k|S|\text{ where }0\le k\le |S|
+%\end{equation}
+
+The nature of the above inequality is not entirely visible, so it might help to just focus on the asymptotic behavior of the inequality. This is ok because any time complexity is also concerned with asymptotic behavior. In order to do this L'Hopital's rule is required.
+
+\begin{equation*}
+	\begin{split}
+		\lim_{|S|\to \infty} \frac{
+			\frac{d}{d|S|}				
+			c \log \left( \frac{
+				|S|!
+			}{
+				\left(|S|-\frac{|S|}{2}!\right)!\frac{|S|}{2}!
+			} \right)
+		}{
+			\frac{d}{d|S|}
+			|S|-i
+		}
+		= &
+		\lim_{|S|\to \infty} \frac{
+			c \frac{d}{d|S|}				
+			\log \left( |S|! \right)-2\log \left( \frac{|S|}{2}! \right)
+		}{
+			1
+		}
+		\\
+		= &
+		\lim_{|S|\to \infty}
+		c \frac{d}{d|S|}				
+		\log \left( \prod_{k=1}^{|S|} k \right)-2\log \left( \prod_{k=1}^{\frac{|S|}{2}} k \right)
+		\\
+		= &
+		c \lim_{|S|\to \infty}
+		\frac{d}{d|S|}
+		\sum_{k=1}^{|S|}\log(k)-2\sum_{k=1}^{\frac{|S|}{2}}\log(k)
+	\end{split}
+\end{equation*}
+
+At this point the math gets a little difficult due to the variable of differentiation being in the summation boundaries. To progress past this point the summations will be approximated with an integral.
+
+\begin{equation*}
+	\begin{split}
+		c \lim_{|S|\to \infty} &
+		\frac{d}{d|S|}
+		\sum_{k=1}^{|S|}\log(k)-2\sum_{k=1}^{\frac{|S|}{2}}\log(k)
+		\approx
+		\lim_{|S|\to \infty}
+		\frac{d}{d|S|}
+		\int_{k=1}^{|S|}\log(k)\,dk-2\int_{k=1}^{\frac{|S|}{2}}\log(k)\,dk
+		\\		
+		= &
+		c \lim_{|S|\to \infty}
+		\left(
+			\log(|S|)(1)-\log(1)(0)
+		\right)-2\left(
+			\log\left( \frac{|S|}{2}	\right)\left( \frac{1}{2} \right)-\log(1)(0)
+		\right)
+		\\
+		= &
+		c \lim_{|S|\to \infty}
+		\log(|S|)-\log\left(\frac{|S|}{2}\right)
+		\\
+		= &
+		c \lim_{|S|\to \infty}
+		\log(2)=\log(2)
+	\end{split}
+\end{equation*}
+
+Given this result the inequality shown in equation \ref{eq:singleInequalitySingleSumValue} holds true, and it can be said that the number of items in the set grows less than or equal to the number of nodes times the log of the number of nodes, or $e_t\in O(n_tlog(n_t))$. This is a subset of the results gained in section \ref{sec:TightBound}. It is tempting to say this result makes sense because it matches the results gained from section \ref{sec:TightBound}, but it is worth remembering that we only considered the largest value of the summation. Despite only considering the largest value of the summation, we still got the same growth rate as the entire summation. In mathematical terms, it would be saying the following fallacy is true.
+
+\begin{equation*}
+	\begin{split}
+		\frac{d}{d|S|}				
+		\log \left( \frac{
+			|S|!
+		}{
+			\left(|S|-\frac{|S|}{2}!\right)!\frac{|S|}{2}!
+		} \right)
+		= &
+		\log(2)
+		\\
+		\frac{d}{d|S|}				
+		\log \left( \sum_{j=0}^{|S|} \frac{
+			|S|!
+		}{
+			\left(|S|-j!\right)!j!
+		} \right)
+		= &
+		\frac{d}{d|S|} |S|\log(2)=\log(2)
+		\\
+		\therefore  \;\;
+		\frac{d}{d|S|}				
+		\log \left( \frac{
+			|S|!
+		}{
+			\left(|S|-\frac{|S|}{2}!\right)!\frac{|S|}{2}!
+		} \right)
+		= &
+		\frac{d}{d|S|}				
+		\log \left( \sum_{j=0}^{|S|} \frac{
+			|S|!
+		}{
+			\left(|S|-j!\right)!j!
+		} \right)
+		=\log(2)
+	\end{split}	
+\end{equation*}
+
+This obviously cannot be true. The reason for this incorrect result can be traced back to approximating the summations with an integral. To understand this error better it can be approximated. Imagine the error as the summation of a bunch of triangles where each triangle represents the extra area from each summation value. This triangle will have a width of $1$ and a height equal to the difference of the current and previous summation values. This idea is shown in figure \ref{fig:LogApprox} for better understanding. Also note that the smallest value from the summations is $2$, meaning the error related to the negative portion of $\log(k)$ does not need to be considered. This error term is not exact, but including it will give better results than if it were not included.
+
+\begin{figure}[h]
+    \center
+    \includegraphics[scale=0.4]{img/LogApprox.png}
+    \caption{A graphical representation of the error of approximating the summation of $log(x)$ with an integral. Note that this graph is not an actual graph of log, just a picture to help convey an idea.}
+    \label{fig:LogApprox}
+\end{figure}
+
+Mathematically the same idea is represented in equation \ref{eq:BetterApprox}. Note how the error term is not bounded, or put in other words the error will not approach a single value as $N$ increases. This means the approximation made before which did not account for this error only got more and more wrong as $N\to \infty$. Given that the goal was to perform asymptotic analysis, this presents an obvious problem. Graphically, the effects of this  error term are demonstrated in figure \ref{fig:DesmosErrProof}.
+
+
+\begin{equation}
+	\begin{split}
+		\sum_{i=1}^N \log(i)
+		\approx &
+		\int_{1}^N \log(i) \,di+\sum_{i=2}^N \frac{1}{2}(\log(i)-\log(i-1))
+		\\
+		= &
+		\int_{1}^N \log(i) \,di+\frac{1}{2} \sum_{i=2}^N \log\left(\frac{i}{i-1}\right)
+		\\
+		= &
+		\int_{1}^N \log(i) \,di+\frac{1}{2} \log\left( \prod_{i=2}^N \frac{i}{i-1} \right)
+		\\
+		= &
+		\int_{1}^N \log(i) \,di+\frac{1}{2} \log\left( N \right)
+		\\
+		\text{or}
+		\\
+		\sum_{i=1}^{N-1} \log(i)
+		\approx &
+		\int_{1}^N \log(i) \,di-\frac{1}{2} \log\left( N \right)
+		\\
+		\text{or}
+		\\
+		\int_{1}^N \log(i) \,di
+		\approx &
+		\sum_{i=1}^N \log(i)-\frac{1}{2}\log(N)
+		\\
+		\text{or}
+		\\
+		\int_{1}^N \log(i) \,di
+		\approx &
+		\sum_{i=1}^{N-1} \log(i)+\frac{1}{2}\log(N)
+	\end{split}
+	\label{eq:BetterApprox}
+\end{equation}
+
+\begin{figure}[h]
+    \center
+    \includegraphics[scale=0.4]{img/DesmosLogErrProof.png}
+    \caption{A graph showing how the error term better matches the summation's values.}
+    \label{fig:DesmosErrProof}
+\end{figure}
+
+Given this better approximation, the next natural question is if it can be used to garnish the correct result. The same approximation made before is shown below with the new error term.
+
+\begin{equation}
+	\begin{split}
+		c \lim_{|S|\to \infty} &
+		\frac{d}{d|S|}
+		\sum_{k=1}^{|S|}\log(k)-2\sum_{k=1}^{\frac{|S|}{2}}\log(k)
+		\\
+		\approx
+		c \lim_{|S|\to \infty} &
+		\frac{d}{d|S|}
+		\left( 
+			\int_{k=1}^{|S|}\log(k)\, dk
+			+
+			\frac{1}{2}\log(|S|)
+		\right) - 2\left( 
+			\int_{k=1}^{\frac{|S|}{2}}\log(k) \,dk
+			+
+			\frac{1}{2}\log\left( \frac{|S|}{2} \right)
+		\right)
+		\\
+		=
+		c \lim_{|S|\to \infty} &
+		\left(
+			\log(|S|)(1)-\log(1)(0)
+		\right)
+		+\frac{1}{2|S|}		
+		-2\left(
+			\log\left( \frac{|S|}{2} \right)\left( \frac{1}{2} \right)-\log(1)(0)
+		\right) - \frac{1}{|S|}
+		\\
+		=
+		c \lim_{|S|\to \infty} &
+		\log(|S|)-\log\left( \frac{|S|}{2} \right)-\frac{1}{2|S|} = 
+		\log(2)
+	\end{split}
+\end{equation}
+
+By including the error terms the growth rates of the entire summation and the largest value of the summation no longer match, as would be expected. Of note is that the final answer was the same. Applying L'Hopital's rule to both approximations reached the final answer of $\log(2)$, creating the inequality shown in equation \ref{eq:Missing2BoundaryInequalities}.
+
+\begin{equation*}
+	\begin{split}
+		\frac{d}{d|S|}				
+		\log \left( \frac{
+			|S|!
+		}{
+			\left(|S|-\frac{|S|}{2}!\right)!\frac{|S|}{2}!
+		} \right)
+		= &
+		\log(2)-\frac{1}{2|S|}
+		\\
+		\frac{d}{d|S|}				
+		\log \left( \sum_{j=0}^{|S|} \frac{
+			|S|!
+		}{
+			\left(|S|-j!\right)!j!
+		} \right)
+		= &
+		\frac{d}{d|S|} |S|\log(2)=\log(2)
+		\\
+		\therefore  \;\;
+		\frac{d}{d|S|}				
+		\log \left( \frac{
+			|S|!
+		}{
+			\left(|S|-\frac{|S|}{2}!\right)!\frac{|S|}{2}!
+		} \right)
+		\ne &
+		\frac{d}{d|S|}				
+		\log \left( \sum_{j=0}^{|S|} \frac{
+			|S|!
+		}{
+			\left(|S|-j!\right)!j!
+		} \right)
+	\end{split}	
+\end{equation*}
+
+\begin{equation}
+	\begin{split}
+        c_2 &\ge \frac{1}{\log(2)}
+	\end{split}
+	\label{eq:Missing2BoundaryInequalities}
+\end{equation}
+
+Similar to the results in section \ref{sec:TigherBoundGeometricalApproach}, the inequality listed in equation \ref{eq:Missing2BoundaryInequalities} does not match the correct inequalities from equation \ref{eq:BoundaryInequalities}. The reason for this is two fold:
+
+\begin{enumerate}
+	\item This section only considered the inner summations of the inequalities in equation \ref{eq:nlognInequality}.
+	\item This section was concerned with asymptotic behavior.
+\end{enumerate}
+
+Of note is that the value for $c_2$ found in this section is still valid, it is just a looser bound than the one found in section \ref{sec:TightBound}. This is also reflected in only being able to prove big-O in this section instead of matching the big-$\Theta$ from section \ref{sec:TightBound}.
+
+\begin{equation*}
+	\frac{1}{2\log(2)}<\frac{1}{\log(2)}
+\end{equation*}
 
 \section{Visiting Edges}
 Now that we have ways of expressing the number of nodes and edges in this DAG
@@ -454,6 +743,65 @@ We also know $e_{\frac{s}{2}} = n_{\frac{s}{2}}\frac{s}{2}$
 $$e_{\frac{s}{2}} = O(2^s\sqrt{s})$$
 This makes sense because the number of nodes in each column represent binomial coefficients which approximate a normal distribution as $s$ approaches infinity. The integral of the normal distribution could be approximated asymptotically with a rectangle with the same height as the mean and width equal to the inflection points. The inflection points of the normal distribution occur at one standard deviation away from the mean. The variance of the normal distribution that these binomial coefficient approach is $\frac{s}{4}$, so linear with respect to s. Therefore the standard deviation, and furthermore the width of our rectangle approximation should grow with $\sqrt{s}$. This means that the height of this rectangle multipled by $\sqrt{s}$ should be equal to $2^s$.
 
+
+\section{Appendix A}
+\label{ap:A}
+
+Through all the chaos in section \ref{sec:LHopitalsRule} it is easy to overlook one simple geometric intuition. To begin, start with the equation shown below. This equation was the result of the first approximation in section \ref{sec:LHopitalsRule}.
+
+\begin{equation*}
+	\frac{d}{d|S|}
+	\int_{k=1}^{|S|}\log(k)\,dk-2\int_{k=1}^{\frac{|S|}{2}}\log(k)\,dk=\log(2)
+\end{equation*}
+
+After some simplifications, the following equation can be gathered.
+
+\begin{equation*}
+	\begin{split}
+		\frac{d}{d|S|}
+		\int_{k=1}^{|S|}\log(k)\,dk-2\int_{k=1}^{\frac{|S|}{2}}\log(k)\,dk
+		= &
+		\frac{d}{d|S|}
+		\int_{k=\frac{|S|}{2}}^{|S|}\log(k)\,dk-\int_{k=1}^{\frac{|S|}{2}}\log(k)\,dk
+		\\
+		= &
+		\frac{d}{d|S|}
+		k\log(k)-k \Big|_{\frac{|S|}{2}}^{|S|}-
+		k\log(k)-k \Big|_{1}^{\frac{|S|}{2}}
+		\\
+		= &
+		\frac{d}{d|S|}
+		|S|\log(|S|)-|S|
+		-|S|\log\left(\frac{|S|}{2}\right)+|S|
+		+1\log(1)-1
+		\\
+		= &
+		\frac{d}{d|S|}
+		|S|\log(|S|)
+		-|S|\log\left( \frac{|S|}{2} \right)
+		-1
+		\\
+		= &
+		\log(2)
+	\end{split}
+\end{equation*}
+
+What this equation says geometrically is quite interesting: the rate of growth of the area of the upper and lower half's of $\log(x)$ is $\log(2)$. Figure \ref{fig:LogArea} puts this in a more graphical form.
+
+\begin{figure}[h]
+    \center
+    \includegraphics[scale=0.4]{img/LogArea.png}
+    \caption{A graph demonstrating the afformentioned geometric intuitions. Note that this graph is not an actual graph of log, just a picture to help convey an idea.}
+    \label{fig:LogArea}
+\end{figure}
+
+Using the graph, the following previous equation can be restated in a possibly more intuitive manner.
+
+\begin{equation}
+	\frac{d}{d|S|}(A-B)=\log(2)
+\end{equation}
+
+
 \section{Examples}
 
 \begin{theorem}
@@ -473,11 +821,6 @@ This makes sense because the number of nodes in each column represent binomial c
 
 \subsection{Pictures}
 
-\begin{figure}[htbp]
-    \center
-    \includegraphics[scale=0.06]{img/photo.jpg}
-    \caption{Sydney, NSW}
-\end{figure}
 
 \subsection{Citation}
 
