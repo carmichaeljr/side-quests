@@ -170,25 +170,12 @@ Given this, the total number of edges in each column can be found using equation
     \label{eq:TotalNumEdges}
 \end{equation}
 
-Equations \ref{eq:TotalNumNodes} and \ref{eq:TotalNumEdges} are the important results that will be used to compare time and space complexity. Now that the problem has been framed in a more mathematical light, the questions originally posed can be translated to the following:
+With this simple analysis, the first two questions posed in section \ref{sec:Problem} are already answered. The last question requires more thought however, and it will be answered in sections \ref{sec:LowerBound}-\ref{sec:TightBound}. Before jumping right in, it may help to pose the question more mathematically. Note that the questoin can be rephrased in two ways, each one producing its own conclusion when proven.
 
 \begin{enumerate}
-    \item TODO: rewrite first question
     \item Given that every edge is traversed once and only once, what is the time complexity of traversing the full graph when compared to the number of nodes as $|S|\to\infty$?
     \item Given that every edge takes equal amounts of memory, what is the space used when compared to the number of nodes as $|S|\to\infty$?
 \end{enumerate}
-
-Now that the questions are posed mathematically, it is easy to see that the last two questions are actually asking the same thing. These questions will be answered together in sections \ref{sec:LowerBound}-\ref{sec:TightBound}. The first question will be answered first, in section \ref{sec:ReachingTheEmptySet}.
-
-\section{Reaching the Empty Set}
-\label{sec:ReachingTheEmptySet}
-
-TODO?? Im tempted to remove this section and its associated question... It might open a whole nother can of worms...
-
-%Ignore this, its wrong
-% \begin{equation}
-%     \prod_{i=0}^{|S|} n_te_t
-% \end{equation}
 
 \section{Big-$\Omega$: A Lower Bound}
 \label{sec:LowerBound}
@@ -719,9 +706,12 @@ Of note is that the value for $c_2$ found in this section is still valid, it is 
 	\frac{1}{2\log(2)}<\frac{1}{\log(2)}
 \end{equation*}
 
-\section{Visiting Edges}
-Now that we have ways of expressing the number of nodes and edges in this DAG
-we are traversing, the question remains how to visit every edge in this graph
+\section{Actually Visiting The Edges}
+\label{sec:VisitingEdges}
+
+So it has been proven that the total number of edges grows with respect to the total number of nodes multiplied by the log of the total number of nodes, or $e_t\in \Theta(n_t\log(n_t))$s. This is great, but how can the edges \textit{actually be traversed} in such a way that every edge is only visited once.
+
+Now that we have ways of expressing the number of nodes and edges in this DAG we are traversing, the question remains how to visit every edge in this graph
 where backtracking is not allowed. More specifically, what is the minimum
 number of times you must restart at the start node (the top element of the
 lattice if you will) and traverse along paths in the graph until you have
@@ -741,7 +731,7 @@ $$ = O(\frac{s^s\sqrt{s}}{((\frac{s}{2})^\frac{s}{2}\sqrt{\frac{s}{2}})^2})$$
 $$ = O(\frac{s^s\sqrt{s}}{(\frac{s}{2})^s\frac{s}{2}}) = O(2^s\frac{\sqrt{s}}{s}) = O(\frac{2^s}{\sqrt{s}})$$
 We also know $e_{\frac{s}{2}} = n_{\frac{s}{2}}\frac{s}{2}$
 $$e_{\frac{s}{2}} = O(2^s\sqrt{s})$$
-This makes sense because the number of nodes in each column represent binomial coefficients which approximate a normal distribution as $s$ approaches infinity. The integral of the normal distribution could be approximated asymptotically with a rectangle with the same height as the mean and width equal to the inflection points. The inflection points of the normal distribution occur at one standard deviation away from the mean. The variance of the normal distribution that these binomial coefficient approach is $\frac{s}{4}$, so linear with respect to s. Therefore the standard deviation, and furthermore the width of our rectangle approximation should grow with $\sqrt{s}$. This means that the height of this rectangle multipled by $\sqrt{s}$ should be equal to $2^s$.
+This makes sense because the number of nodes in each column represent binomial coefficients which approximate a normal distribution as $s$ approaches infinity. The integral of the normal distribution could be approximated asymptotically with a rectangle with the same height as the mean and width equal to the inflection points. The inflection points of the normal distribution occur at one standard deviation away from the mean. The variance of the normal distribution that these binomial coefficient approach is $\frac{s}{4}$, so linear with respect to s. Therefore the standard deviation, and furthermore the width of our rectangle approximation should grow with $\sqrt{s}$. This means that the height of this rectangle multiplied by $\sqrt{s}$ should be equal to $2^s$.
 
 
 \section{Appendix A}
