@@ -15,7 +15,7 @@ single straight line through the construction site.
 The first line of input contains two space separated numbers: $l$ and $n$. $l$
 is a float representing the maximum length of your crane arm. $n$ is an integer
 representing the total number of objects to move. The next $n$ lines are each 4
-numbers $x_i y_i x_d y_d$ representing the xy coordinates of the initial point
+numbers $x_i$ $y_i$ $x_d$ $y_d$ representing the xy coordinates of the initial point
 and destination point for each object. If it possible to move all objects while
 driving along a single straight line, print POSSIBLE. Otherwise, print
 IMPOSSIBLE.
