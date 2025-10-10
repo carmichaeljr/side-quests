@@ -120,7 +120,6 @@ def find_line_slow(segments):
                 p2 = s2[pair[1]]
                 l = Line.from_points(p1, p2)
                 for s3 in segments:
-                    #print('tick')
                     if not s3.intersects(l):
                         break
                 else:
@@ -138,35 +137,18 @@ class Event:
     def __eq__(self, o):
         s = self.line
         l = o.line
-        if s.vert != l.vert:
-            return False
-        if s.slope != l.slope:
-            return False
-        for p in ('p1', 'p2'):
-            sp = getattr(self, p)
-            op = getattr(o, p)
-            if sp.x != op.x or sp.y != op.y:
-                return False
-        return True
+        if s.vert and l.vert:
+            return True
+        return s.slope == l.slope
 
     def __lt__(self, o):
         s = self.line
         l = o.line
-        if s.vert and not l.vert:
-            return True
-        if l.vert and not l.vert:
+        if s.vert:
+            return not l.vert
+        if l.vert:
             return False
-        if s.slope != l.slope:
-            return s.slope < l.slope
-        if self.p1.left != self.p2.left:
-            if o.p1.left != o.p2.left:
-                l, r = self.p1, self.p2 if self.p1.left else self.p2, self.p1
-                if r.x < 
-            else:
-                return True
-        # doesn't matter, should just be consistent
-        return self.p1.x < self.p2.x
-
+        return s.slope < l.slope
 
     def __repr__(self):
         return f'{self.line} {self.p1} {self.p2} {self.same_segment}'
@@ -217,7 +199,6 @@ class SegmentTree:
     def __setitem__(self, i, val):
         self.levels[0][i] = val
         for l in range(1, len(self.levels)):
-            #print('tick')
             p = i // 2
             if i % 2:
                 left, right = i - 1, i
