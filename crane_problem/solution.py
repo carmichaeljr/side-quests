@@ -1,11 +1,10 @@
+#!/usr/bin/env python3
 import sys
 from math import ceil
 from enum import Enum
 from functools import total_ordering
 from itertools import product
 from dataclasses import dataclass
-
-# TODO BOTH SOLUTIONS ARE CURRENTLY VERY MINIMALLY TESTED AND LIKELY HAVE BUGS
 
 @total_ordering
 @dataclass
@@ -71,10 +70,15 @@ def parse_input(lines):
     segments = []
     for i in range(n):
         ax, ay, bx, by = [float(x) for x in next(lines).split()]
+        if ax == bx and ay == by:
+            # object already at destination
+            continue
         midx = (ax + bx) / 2
         midy = (ay + by) / 2
         dist = (abs(ax - bx) ** 2 + abs(ay - by) ** 2) ** 0.5
         rad = dist / 2
+        if rad > l:
+            return None
         offset = (l_square - rad ** 2) ** 0.5
         perp_y = ax - bx
         perp_x = by - ay
@@ -82,9 +86,12 @@ def parse_input(lines):
         perp_y /= dist
         x1 = midx + perp_x * offset
         x2 = midx - perp_x * offset
-        left1 = x1 < x2
-        p1 = Point(x1, midy + perp_y * offset, left1)
-        p2 = Point(x2, midy - perp_y * offset, not left1)
+        if x1 == x2:
+            left = y1 < y2
+        else:
+            left = x1 < x2
+        p1 = Point(x1, midy + perp_y * offset, left)
+        p2 = Point(x2, midy - perp_y * offset, not left)
         segments.append(Segment(p1, p2))
     return segments
 
@@ -113,6 +120,7 @@ def find_line_slow(segments):
                 p2 = s2[pair[1]]
                 l = Line.from_points(p1, p2)
                 for s3 in segments:
+                    #print('tick')
                     if not s3.intersects(l):
                         break
                 else:
@@ -130,18 +138,35 @@ class Event:
     def __eq__(self, o):
         s = self.line
         l = o.line
-        if s.vert and l.vert:
-            return True
-        return s.slope == l.slope
+        if s.vert != l.vert:
+            return False
+        if s.slope != l.slope:
+            return False
+        for p in ('p1', 'p2'):
+            sp = getattr(self, p)
+            op = getattr(o, p)
+            if sp.x != op.x or sp.y != op.y:
+                return False
+        return True
 
     def __lt__(self, o):
         s = self.line
         l = o.line
-        if s.vert:
+        if s.vert and not l.vert:
             return True
-        if l.vert:
+        if l.vert and not l.vert:
             return False
-        return s.slope < l.slope
+        if s.slope != l.slope:
+            return s.slope < l.slope
+        if self.p1.left != self.p2.left:
+            if o.p1.left != o.p2.left:
+                l, r = self.p1, self.p2 if self.p1.left else self.p2, self.p1
+                if r.x < 
+            else:
+                return True
+        # doesn't matter, should just be consistent
+        return self.p1.x < self.p2.x
+
 
     def __repr__(self):
         return f'{self.line} {self.p1} {self.p2} {self.same_segment}'
@@ -192,6 +217,7 @@ class SegmentTree:
     def __setitem__(self, i, val):
         self.levels[0][i] = val
         for l in range(1, len(self.levels)):
+            #print('tick')
             p = i // 2
             if i % 2:
                 left, right = i - 1, i
@@ -233,7 +259,6 @@ def find_line_fast(segments):
         return True
     for e in events:
         i, j = e.p1.index, e.p2.index
-        points[i], points[j] = points[j], points[i]
         e.p1.index, e.p2.index = j, i
         if e.same_segment:
             e.p1.left, e.p2.left = e.p2.left, e.p1.left
@@ -248,7 +273,9 @@ if __name__ == '__main__':
         segments = parse_file(sys.argv[1])
     else:
         segments = parse_stdin()
-    if find_line_slow(segments):
+    #if segments is not None and (not len(segments) or find_line_slow(segments)):
+    if segments is not None and (not len(segments) or find_line_fast(segments)):
         print('POSSIBLE')
     else:
         print('IMPOSSIBLE')
+
